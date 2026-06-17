@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Murat A. Avcu — Data Scientist &amp; ML Engineer</title>
+<meta name="description" content="Murat A. Avcu — Data Scientist & ML Engineer in Los Angeles. Building ML systems for quantitative trading, computer vision and LLM agents. M.S. Business Analytics @ Cal Poly Pomona." />
+
+<!-- Open Graph (nice previews when the link is shared) -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Murat A. Avcu — Data Scientist & ML Engineer" />
+<meta property="og:description" content="ML systems that move the metric — quantitative trading, computer vision and LLM agents." />
+
+<!-- Inline up-tick favicon -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2315171C'/%3E%3Cpath d='M6 22 L13 15 L18 19 L26 9' fill='none' stroke='%232A39FF' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='26' cy='9' r='2.6' fill='%2311A36B'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --ink:#15171C;
+    --ink-2:#565C68;
+    --ink-3:#8B919C;
+    --paper:#F2F3EF;
+    --card:#FBFBF8;
+    --card-2:#FFFFFF;
+    --line:#E3E4DD;
+    --line-2:#D2D4CB;
+    --accent:#2A39FF;
+    --accent-deep:#1B27C9;
+    --up:#11A36B;
+    --down:#E5484D;
+    --maxw:1120px;
+    --r:14px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  ::selection{background:var(--accent);color:#fff;}
+
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  /* paper grid texture */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:54px 54px;
+    opacity:.32;
+    pointer-events:none;
+    z-index:0;
+    -webkit-mask-image:radial-gradient(circle at 50% 0%,#000,transparent 78%);
+            mask-image:radial-gradient(circle at 50% 0%,#000,transparent 78%);
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;position:relative;z-index:1;}
+
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-3);
+  }
+  .tnum{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:saturate(1.4) blur(10px);
+    background:rgba(242,243,239,.78);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:var(--maxw);margin:0 auto;
+    padding:13px 28px;
+    display:flex;align-items:center;gap:24px;
+  }
+  .brand{display:flex;align-items:center;gap:11px;font-weight:600;letter-spacing:-.01em;}
+  .brand .mark{
+    width:30px;height:30px;border-radius:8px;background:var(--ink);
+    display:grid;place-items:center;flex:none;
+  }
+  .brand .mark svg{width:18px;height:18px;}
+  .brand b{font-family:"Space Grotesk",sans-serif;font-size:1rem;}
+  .nav{display:flex;gap:26px;margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.78rem;letter-spacing:.04em;}
+  .nav a{color:var(--ink-2);transition:color .2s;}
+  .nav a:hover{color:var(--accent);}
+  .status{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.04em;
+    padding:7px 12px;border:1px solid var(--line-2);border-radius:999px;
+    background:var(--card-2);color:var(--ink-2);white-space:nowrap;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--up);position:relative;flex:none;}
+  .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--up);opacity:.5;animation:ping 2.2s var(--ease) infinite;}
+  @keyframes ping{0%{transform:scale(.6);opacity:.6}80%,100%{transform:scale(1.8);opacity:0}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:74px 0 30px;}
+  .hero .eyebrow{margin-bottom:22px;}
+  .hero h1{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:700;
+    font-size:clamp(2.7rem,8vw,5.4rem);
+    line-height:.98;
+    letter-spacing:-.035em;
+    margin:0 0 24px;
+  }
+  .hero h1 .blink{color:var(--accent);animation:blink 1.15s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0}}
+  .thesis{
+    font-size:clamp(1.18rem,2.3vw,1.7rem);
+    line-height:1.45;
+    color:var(--ink-2);
+    max-width:30ch;
+    font-weight:400;
+    margin:0 0 14px;
+  }
+  .thesis b{color:var(--ink);font-weight:600;}
+  .subnote{font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--ink-3);margin-bottom:30px;}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:6px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:"IBM Plex Mono",monospace;font-size:.83rem;letter-spacing:.02em;
+    padding:13px 20px;border-radius:11px;
+    border:1px solid var(--ink);background:var(--ink);color:#fff;
+    transition:transform .18s var(--ease),box-shadow .2s,background .2s;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px -12px rgba(21,23,28,.55);}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-2);}
+  .btn.ghost:hover{border-color:var(--ink);box-shadow:none;}
+  .btn svg{width:16px;height:16px;}
+
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center;}
+
+  /* hero chart */
+  .chartcard{
+    border:1px solid var(--line);border-radius:var(--r);
+    background:linear-gradient(180deg,var(--card-2),var(--card));
+    padding:18px 18px 14px;
+    box-shadow:0 24px 60px -40px rgba(21,23,28,.4);
+  }
+  .chartcard .chead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .chartcard .chead span{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);}
+  .chartcard .chead .pos{color:var(--up);letter-spacing:0;font-size:.82rem;font-weight:600;}
+  .chartcard svg.eq{width:100%;height:auto;display:block;}
+  .chartcap{font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--ink-3);margin-top:8px;line-height:1.5;}
+  .eq .grid-line{stroke:var(--line-2);stroke-width:1;stroke-dasharray:2 5;opacity:.7;}
+  .eq .curve{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+  .eq .area{fill:url(#eqfill);opacity:0;transition:opacity .9s ease .5s;}
+  .eq .live{fill:var(--accent);}
+  .eq .livering{fill:none;stroke:var(--accent);stroke-width:1.5;transform-origin:center;transform-box:fill-box;animation:livepulse 2.4s var(--ease) infinite;}
+  @keyframes livepulse{0%{r:5;opacity:.6}80%,100%{r:16;opacity:0}}
+  .eq .axis-t{font-family:"IBM Plex Mono",monospace;font-size:9px;fill:var(--ink-3);}
+
+  /* metric strip */
+  .metrics{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+    margin:46px 0 8px;background:var(--card);
+  }
+  .metric{padding:22px 22px 20px;border-right:1px solid var(--line);}
+  .metric:last-child{border-right:none;}
+  .metric .val{
+    font-family:"IBM Plex Mono",monospace;font-weight:600;
+    font-size:clamp(1.7rem,3.6vw,2.5rem);letter-spacing:-.02em;line-height:1;
+    color:var(--ink);
+  }
+  .metric .val .pfx{color:var(--up);}
+  .metric .lbl{font-size:.8rem;color:var(--ink-2);margin-top:11px;line-height:1.45;}
+
+  /* ---------- sections ---------- */
+  section{padding:72px 0;position:relative;}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:34px;}
+  .sec-head .tick{font-family:"IBM Plex Mono",monospace;color:var(--accent);font-size:.8rem;}
+  .sec-head h2{
+    font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:clamp(1.55rem,3.6vw,2.35rem);letter-spacing:-.02em;margin:0;
+  }
+  .sec-head .rule{flex:1;height:1px;background:var(--line-2);align-self:center;}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:48px;align-items:start;}
+  .about-grid p{font-size:1.06rem;color:var(--ink-2);margin:0 0 16px;}
+  .about-grid p b{color:var(--ink);font-weight:600;}
+  .facts{border-top:1px solid var(--line-2);}
+  .fact{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:.82rem;}
+  .fact .k{color:var(--ink-3);min-width:96px;flex:none;letter-spacing:.04em;}
+  .fact .v{color:var(--ink);}
+
+  /* track record */
+  .role{border-top:1px solid var(--line-2);padding:30px 0;}
+  .role:last-child{border-bottom:1px solid var(--line-2);}
+  .role-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;align-items:baseline;margin-bottom:6px;}
+  .role-top h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.3rem;margin:0;letter-spacing:-.01em;}
+  .role-top h3 .co{color:var(--accent);}
+  .role-meta{font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--ink-3);letter-spacing:.03em;}
+  .role-desc{color:var(--ink-2);max-width:78ch;margin:6px 0 16px;}
+  .deltas{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px;}
+  .delta{
+    font-family:"IBM Plex Mono",monospace;font-size:.8rem;font-weight:500;
+    padding:7px 12px;border-radius:9px;background:var(--card-2);border:1px solid var(--line);
+    display:inline-flex;align-items:center;gap:7px;color:var(--ink);
+  }
+  .delta .u{color:var(--up);}
+  .role ul{margin:0;padding-left:0;list-style:none;display:grid;gap:9px;max-width:82ch;}
+  .role ul li{position:relative;padding-left:22px;color:var(--ink-2);font-size:.95rem;}
+  .role ul li::before{content:"›";position:absolute;left:4px;top:-1px;color:var(--accent);font-family:"IBM Plex Mono",monospace;}
+
+  /* projects */
+  .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;}
+  .card{
+    border:1px solid var(--line);border-radius:var(--r);background:var(--card);
+    padding:22px;display:flex;flex-direction:column;gap:13px;
+    transition:transform .2s var(--ease),box-shadow .25s,border-color .25s,background .25s;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--line-2);background:var(--card-2);box-shadow:0 22px 44px -28px rgba(21,23,28,.4);}
+  .card .tag{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);}
+  .card h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.14rem;margin:0;letter-spacing:-.01em;}
+  .card p{margin:0;color:var(--ink-2);font-size:.9rem;flex:1;}
+  .stack{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{font-family:"IBM Plex Mono",monospace;font-size:.7rem;padding:4px 8px;border-radius:7px;background:var(--paper);border:1px solid var(--line);color:var(--ink-2);}
+  .card-foot{display:flex;justify-content:space-between;align-items:center;padding-top:6px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-3);}
+  .card-foot .repo{color:var(--ink);display:inline-flex;align-items:center;gap:6px;transition:color .2s,gap .2s;}
+  .card:hover .repo{color:var(--accent);gap:9px;}
+  .star{color:var(--ink-2);}
+  .more-link{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--ink);border-bottom:1px solid var(--line-2);padding-bottom:3px;transition:color .2s,border-color .2s;}
+  .more-link:hover{color:var(--accent);border-color:var(--accent);}
+
+  /* stack section */
+  .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+  .stack-card{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:20px;}
+  .stack-card .eyebrow{margin-bottom:14px;color:var(--accent);}
+  .stack-card .row{display:flex;flex-wrap:wrap;gap:7px;}
+
+  /* education */
+  .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+  .edu-item{padding:20px 0;border-top:1px solid var(--line-2);}
+  .edu-item:first-child{border-top:none;padding-top:0;}
+  .edu-item h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.08rem;margin:0 0 3px;letter-spacing:-.01em;}
+  .edu-item .sub{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--ink-3);margin-bottom:6px;}
+  .edu-item p{margin:0;color:var(--ink-2);font-size:.92rem;}
+  .recog{display:grid;gap:11px;}
+  .recog .item{display:flex;gap:13px;padding:13px 0;border-top:1px solid var(--line);}
+  .recog .item:first-child{border-top:none;padding-top:0;}
+  .recog .yr{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--accent);min-width:60px;flex:none;padding-top:2px;}
+  .recog .t{color:var(--ink);font-size:.94rem;}
+  .recog .t span{display:block;color:var(--ink-3);font-size:.82rem;}
+
+  /* contact */
+  .contact{padding-bottom:40px;}
+  .contact-card{
+    border:1px solid var(--line);border-radius:20px;
+    background:linear-gradient(180deg,var(--card-2),var(--card));
+    padding:clamp(34px,5vw,60px);text-align:center;
+    box-shadow:0 30px 70px -50px rgba(21,23,28,.5);
+  }
+  .contact-card h2{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(1.9rem,5vw,3.1rem);letter-spacing:-.03em;margin:0 0 14px;}
+  .contact-card p{color:var(--ink-2);max-width:46ch;margin:0 auto 30px;font-size:1.05rem;}
+  .links{display:flex;flex-wrap:wrap;justify-content:center;gap:11px;}
+  .link{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:"IBM Plex Mono",monospace;font-size:.82rem;
+    padding:12px 18px;border-radius:11px;border:1px solid var(--line-2);background:var(--card-2);
+    color:var(--ink);transition:transform .18s var(--ease),border-color .2s,color .2s;
+  }
+  .link:hover{transform:translateY(-3px);border-color:var(--accent);color:var(--accent);}
+  .link svg{width:17px;height:17px;}
+
+  footer{padding:34px 0 56px;}
+  .foot-inner{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:22px;font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-3);}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:880px){
+    .hero-grid{grid-template-columns:1fr;gap:40px;}
+    .about-grid{grid-template-columns:1fr;gap:30px;}
+    .edu-grid{grid-template-columns:1fr;gap:30px;}
+    .metrics{grid-template-columns:1fr 1fr;}
+    .metric:nth-child(2){border-right:none;}
+    .metric:nth-child(1),.metric:nth-child(2){border-bottom:1px solid var(--line);}
+  }
+  @media(max-width:620px){
+    .wrap,.topbar-inner{padding-left:20px;padding-right:20px;}
+    .nav{display:none;}
+    .status{font-size:.66rem;padding:6px 10px;}
+    .metrics{grid-template-columns:1fr;}
+    .metric{border-right:none;border-bottom:1px solid var(--line);}
+    .metric:last-child{border-bottom:none;}
+    .role-top{flex-direction:column;gap:2px;}
+    section{padding:56px 0;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .dot::after,.eq .livering,.hero h1 .blink{animation:none;}
+    .eq .area{opacity:1;transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top" aria-label="Murat A. Avcu — home">
+      <span class="mark">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 22 L13 15 L18 19 L26 9" fill="none" stroke="#2A39FF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="9" r="2.6" fill="#11A36B"/></svg>
+      </span>
+      <b>Murat A. Avcu</b>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#work">work</a>
+      <a href="#record">record</a>
+      <a href="#stack">stack</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <span class="status"><span class="dot"></span>Open to 2027 roles</span>
+  </div>
+</header>
+
+<a id="top"></a>
+
+<!-- ===== HERO ===== -->
+<div class="hero wrap">
+  <div class="eyebrow">Data Scientist / ML Engineer — Los Angeles, CA</div>
+  <div class="hero-grid">
+    <div>
+      <h1>Murat<br>A. Avcu<span class="blink">_</span></h1>
+      <p class="thesis">I build <b>machine-learning systems</b> that turn large-scale, messy data into outcomes you can measure.</p>
+      <p class="subnote">// quantitative trading · computer vision · LLM agents</p>
+      <div class="cta-row">
+        <a class="btn" href="https://github.com/muratali016" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.3 1.19-3.1-.12-.3-.52-1.48.11-3.08 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.11 3.08.74.8 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.28 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+          GitHub
+        </a>
+        <a class="btn ghost" href="mailto:murataliavcu1@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+          Email me
+        </a>
+        <a class="btn ghost" href="https://www.youtube.com/@murataavcu" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 5 12 5 12 5s-7 0-8.9.4A3 3 0 0 0 1 7.5 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1C5 19 12 19 12 19s7 0 8.9-.4a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.4 12 31 31 0 0 0 23 7.5ZM9.8 15.3V8.7l5.7 3.3Z"/></svg>
+          YouTube
+        </a>
+      </div>
+    </div>
+
+    <!-- signature: animated backtest equity curve -->
+    <div class="chartcard">
+      <div class="chead">
+        <span>ML-filtered S&amp;P 500 · backtest</span>
+        <span class="pos tnum">+91% at 1:2 R:R</span>
+      </div>
+      <svg class="eq" viewBox="0 0 640 260" role="img" aria-label="Illustrative upward equity curve of an ML-filtered trading strategy">
+        <defs>
+          <linearGradient id="eqfill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2A39FF" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#2A39FF" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- grid -->
+        <line class="grid-line" x1="40" y1="60"  x2="600" y2="60"/>
+        <line class="grid-line" x1="40" y1="110" x2="600" y2="110"/>
+        <line class="grid-line" x1="40" y1="160" x2="600" y2="160"/>
+        <line class="grid-line" x1="40" y1="210" x2="600" y2="210"/>
+        <text class="axis-t" x="6" y="64">+++</text>
+        <text class="axis-t" x="10" y="214">0</text>
+        <!-- candlestick texture -->
+        <g opacity="0.4" stroke-width="1">
+          <g stroke="#11A36B"><line x1="120" y1="196" x2="120" y2="214"/><rect x="116" y="200" width="8" height="10" fill="#11A36B" stroke="none"/></g>
+          <g stroke="#E5484D"><line x1="200" y1="186" x2="200" y2="206"/><rect x="196" y="190" width="8" height="9" fill="#E5484D" stroke="none"/></g>
+          <g stroke="#11A36B"><line x1="280" y1="170" x2="280" y2="190"/><rect x="276" y="174" width="8" height="11" fill="#11A36B" stroke="none"/></g>
+          <g stroke="#11A36B"><line x1="360" y1="146" x2="360" y2="166"/><rect x="356" y="150" width="8" height="11" fill="#11A36B" stroke="none"/></g>
+          <g stroke="#E5484D"><line x1="440" y1="128" x2="440" y2="146"/><rect x="436" y="132" width="8" height="8" fill="#E5484D" stroke="none"/></g>
+          <g stroke="#11A36B"><line x1="520" y1="96"  x2="520" y2="116"/><rect x="516" y="100" width="8" height="11" fill="#11A36B" stroke="none"/></g>
+        </g>
+        <!-- area + curve -->
+        <path class="area" d="M40 200 L80 188 L120 196 L160 170 L200 178 L240 150 L280 160 L320 128 L360 138 L400 108 L440 120 L480 92 L520 100 L560 72 L600 58 L600 230 L40 230 Z"/>
+        <path class="curve" id="eqcurve" d="M40 200 L80 188 L120 196 L160 170 L200 178 L240 150 L280 160 L320 128 L360 138 L400 108 L440 120 L480 92 L520 100 L560 72 L600 58"/>
+        <circle class="livering" cx="600" cy="58" r="5"/>
+        <circle class="live" cx="600" cy="58" r="4.5"/>
+      </svg>
+      <div class="chartcap">Illustrative equity curve — ML-filtered EMA-crossover strategy on S&amp;P 500. Backtest, for education &amp; research only.</div>
+    </div>
+  </div>
+
+  <!-- metric strip -->
+  <div class="metrics reveal">
+    <div class="metric">
+      <div class="val tnum" data-count="97.1" data-suffix="%"></div>
+      <div class="lbl">Intraday price-level accuracy — S&amp;P 500 ML model</div>
+    </div>
+    <div class="metric">
+      <div class="val tnum"><span class="pfx">+</span><span data-count="26.1" data-suffix="%"></span></div>
+      <div class="lbl">ROAS lift built at an 8-figure retailer</div>
+    </div>
+    <div class="metric">
+      <div class="val tnum" data-count="2" data-suffix="M+"></div>
+      <div class="lbl">Records processed monthly via Airflow + AWS</div>
+    </div>
+    <div class="metric">
+      <div class="val tnum" data-count="99.85" data-suffix="%"></div>
+      <div class="lbl">Accuracy — breast-cancer imaging model, TÜBİTAK</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="wrap">
+  <div class="sec-head reveal"><span class="tick">§</span><h2>Profile</h2><span class="rule"></span></div>
+  <div class="about-grid reveal">
+    <div>
+      <p>Data scientist and ML engineer with <b>3+ years</b> turning data into measurable business value. At an 8-figure e-commerce company I built marketplace insight engines and AI pricing systems across Amazon, Etsy and Shopify; earlier, as a research intern at <b>TÜBİTAK</b> — Turkey's largest research institute — I trained deep-learning models for medical imaging.</p>
+      <p>I'm now completing an <b>M.S. in Business Analytics</b> at Cal Poly Pomona on top of a B.S. in Electrical &amp; Electronics Engineering. I like problems where a model has to earn its place by moving a number — accuracy, margin, ROAS, latency. Outside of work I teach AI on YouTube and Udemy and serve as an OpenAI ChatGPT Ambassador.</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><span class="k">LOCATION</span><span class="v">Los Angeles, CA · open to remote</span></div>
+      <div class="fact"><span class="k">DEGREE</span><span class="v">M.S. Business Analytics — Cal Poly Pomona (3.51)</span></div>
+      <div class="fact"><span class="k">PRIOR</span><span class="v">B.S. Electrical &amp; Electronics Eng. (3.1)</span></div>
+      <div class="fact"><span class="k">FOCUS</span><span class="v">ML · Deep Learning · LLMs · CV · NLP · MLOps</span></div>
+      <div class="fact"><span class="k">SEEKING</span><span class="v">Data Scientist / ML / Analytics — 2027</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRACK RECORD ===== -->
+<section id="record" class="wrap">
+  <div class="sec-head reveal"><span class="tick">§</span><h2>Track record</h2><span class="rule"></span></div>
+
+  <div class="role reveal">
+    <div class="role-top">
+      <h3><span class="co">MegaGear</span> — Data Scientist</h3>
+      <span class="role-meta">PART-TIME · MAR 2023 – JUN 2025 · ISTANBUL / REMOTE</span>
+    </div>
+    <p class="role-desc">Shipped 20+ data and ML systems for an 8-figure retailer across 13 marketplaces — pricing, demand forecasting, A/B testing and LLM-driven trend detection on Amazon, Etsy and Shopify.</p>
+    <div class="deltas">
+      <span class="delta"><span class="u">▲</span> +26.1% ROAS</span>
+      <span class="delta"><span class="u">▲</span> +24.5% conversion</span>
+      <span class="delta"><span class="u">▲</span> +12.7% profit margin (H1'25)</span>
+      <span class="delta"><span class="u">▼</span> −15% stockouts</span>
+      <span class="delta"><span class="u">▲</span> +10% recurring purchases</span>
+    </div>
+    <ul>
+      <li>Demand-elasticity pricing model (regression, scikit-learn) lifting margins +11% in H1'24 and +12.7% in H1'25.</li>
+      <li>Time-series forecasting (ARIMA, Prophet) across three marketplaces, cutting stockouts ~15%.</li>
+      <li>Causal inference (difference-in-differences, propensity-score matching) that isolated true pricing impact and prevented 12+ false-positive rollouts.</li>
+      <li>LLM (GPT, LLaMA) + NLP trend detection surfacing emerging products ~2 weeks early — processing 2M+ records monthly through Apache Airflow and AWS.</li>
+    </ul>
+  </div>
+
+  <div class="role reveal">
+    <div class="role-top">
+      <h3><span class="co">TÜBİTAK</span> — Machine Learning Engineer, Intern</h3>
+      <span class="role-meta">INTERNSHIP · DEC 2021 – SEP 2022 · ISTANBUL</span>
+    </div>
+    <p class="role-desc">Built deep-learning models for medical diagnosis at Turkey's largest research institute, integrating an AI system into a clinical imaging device for professional use.</p>
+    <div class="deltas">
+      <span class="delta"><span class="u">▲</span> 99.85% accuracy</span>
+      <span class="delta">breast-cancer detection</span>
+      <span class="delta">histopathology imaging</span>
+    </div>
+    <ul>
+      <li>Segmentation and classification of histopathological images using U-Net, Mask R-CNN and YOLOv5–v7.</li>
+      <li>Detected lymphocyte cells in tumor regions to compute diagnostic ratios for disease identification.</li>
+      <li>Stack: PyTorch, OpenCV, C++.</li>
+    </ul>
+  </div>
+
+  <div class="role reveal">
+    <div class="role-top">
+      <h3><span class="co">Mercedes-Benz Türk</span> — Engineering Intern</h3>
+      <span class="role-meta">INTERNSHIP · JUN 2022 – AUG 2022 · AKSARAY</span>
+    </div>
+    <p class="role-desc">Programmed KUKA robots for synchronized operation on a truck mass-production line; hands-on PLC programming, pneumatics and basic hydraulics.</p>
+  </div>
+</section>
+
+<!-- ===== SELECTED WORK ===== -->
+<section id="work" class="wrap">
+  <div class="sec-head reveal"><span class="tick">§</span><h2>Selected work</h2><span class="rule"></span></div>
+  <div class="proj-grid">
+
+    <a class="card reveal" href="https://github.com/muratali016/S-P-500-Key-Level-Behavior-ML-Model" target="_blank" rel="noopener">
+      <span class="tag">Quant · ML</span>
+      <h3>S&amp;P 500 Key-Level Behavior</h3>
+      <p>Filters EMA-crossover signals by classifying market behavior around support/resistance. Three models score each setup — 91%+ of filtered signals reach a 1:2 risk-reward.</p>
+      <div class="stack"><span class="chip">Python</span><span class="chip">XGBoost</span><span class="chip">Random Forest</span><span class="chip">scikit-learn</span></div>
+      <div class="card-foot"><span>Apache-2.0</span><span class="repo">View repo →</span></div>
+    </a>
+
+    <a class="card reveal" href="https://github.com/muratali016/Yolov7-Object-Counter-Custom-Funcitons" target="_blank" rel="noopener">
+      <span class="tag">Computer Vision</span>
+      <h3>YOLOv7 Object Counter</h3>
+      <p>Region- and line-based object counting on top of YOLOv7 with custom functions. My most-used open-source project.</p>
+      <div class="stack"><span class="chip">Python</span><span class="chip">PyTorch</span><span class="chip">YOLOv7</span><span class="chip">OpenCV</span></div>
+      <div class="card-foot"><span class="star">★ 120 · 29 forks</span><span class="repo">View repo →</span></div>
+    </a>
+
+    <a class="card reveal" href="https://github.com/muratali016/Claude-with-Tradingview" target="_blank" rel="noopener">
+      <span class="tag">LLM · Trading</span>
+      <h3>Claude × TradingView Copilot</h3>
+      <p>Screenshots live TradingView charts via Chrome DevTools and reasons over them using your own Pine-Script logic in the prompt. Persistent memory, swappable vision models.</p>
+      <div class="stack"><span class="chip">Python</span><span class="chip">Claude</span><span class="chip">Gemini</span><span class="chip">CDP</span></div>
+      <div class="card-foot"><span>Apache-2.0</span><span class="repo">View repo →</span></div>
+    </a>
+
+    <a class="card reveal" href="https://github.com/muratali016/AI-CHEAP-ORCHESTATOR-AGENTS" target="_blank" rel="noopener">
+      <span class="tag">LLM Agents</span>
+      <h3>AI Cheap Orchestrator Agents</h3>
+      <p>An agent crew where Claude orchestrates three DeepSeek workers passing tasks back and forth — built a Minecraft clone in ~5 minutes for about $0.05. Drop the folder into any project.</p>
+      <div class="stack"><span class="chip">Python</span><span class="chip">Claude</span><span class="chip">DeepSeek</span><span class="chip">Agentic</span></div>
+      <div class="card-foot"><span class="star">★ 1</span><span class="repo">View repo →</span></div>
+    </a>
+
+    <a class="card reveal" href="https://github.com/muratali016/Yolov7-License-Plate-Recognition-Program" target="_blank" rel="noopener">
+      <span class="tag">Computer Vision</span>
+      <h3>License-Plate Recognition</h3>
+      <p>End-to-end license-plate detection and recognition built on YOLOv7.</p>
+      <div class="stack"><span class="chip">Python</span><span class="chip">YOLOv7</span><span class="chip">OCR</span></div>
+      <div class="card-foot"><span class="star">★ 45 · 9 forks</span><span class="repo">View repo →</span></div>
+    </a>
+
+    <a class="card reveal" href="https://github.com/muratali016/Twitter-Scraper-with-LLM" target="_blank" rel="noopener">
+      <span class="tag">LLM · NLP</span>
+      <h3>Twitter Scraper with LLM</h3>
+      <p>Scrape an X/Twitter timeline and chat with the tweets through an LLM.</p>
+      <div class="stack"><span class="chip">Python</span><span class="chip">LLM</span><span class="chip">NLP</span></div>
+      <div class="card-foot"><span class="star">★ 16 · 2 forks</span><span class="repo">View repo →</span></div>
+    </a>
+
+  </div>
+  <a class="more-link" href="https://github.com/muratali016?tab=repositories" target="_blank" rel="noopener">More on GitHub →</a>
+</section>
+
+<!-- ===== STACK ===== -->
+<section id="stack" class="wrap">
+  <div class="sec-head reveal"><span class="tick">§</span><h2>Stack</h2><span class="rule"></span></div>
+  <div class="stack-grid reveal">
+    <div class="stack-card">
+      <div class="eyebrow">Languages</div>
+      <div class="row"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">C++</span></div>
+    </div>
+    <div class="stack-card">
+      <div class="eyebrow">ML &amp; Deep Learning</div>
+      <div class="row"><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">scikit-learn</span><span class="chip">XGBoost</span><span class="chip">Random Forest</span></div>
+    </div>
+    <div class="stack-card">
+      <div class="eyebrow">LLMs &amp; NLP</div>
+      <div class="row"><span class="chip">GPT</span><span class="chip">LLaMA</span><span class="chip">Mistral</span><span class="chip">LangChain</span><span class="chip">LlamaIndex</span><span class="chip">NLP</span></div>
+    </div>
+    <div class="stack-card">
+      <div class="eyebrow">Computer Vision</div>
+      <div class="row"><span class="chip">YOLO v5–v9</span><span class="chip">U-Net</span><span class="chip">Mask R-CNN</span><span class="chip">OpenCV</span></div>
+    </div>
+    <div class="stack-card">
+      <div class="eyebrow">Data &amp; MLOps</div>
+      <div class="row"><span class="chip">Apache Airflow</span><span class="chip">AWS S3</span><span class="chip">Docker</span><span class="chip">MySQL</span><span class="chip">MongoDB</span></div>
+    </div>
+    <div class="stack-card">
+      <div class="eyebrow">Analytics &amp; BI</div>
+      <div class="row"><span class="chip">A/B testing</span><span class="chip">Causal inference</span><span class="chip">ARIMA</span><span class="chip">Prophet</span><span class="chip">Power BI</span><span class="chip">Tableau</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EDUCATION & RECOGNITION ===== -->
+<section id="education" class="wrap">
+  <div class="sec-head reveal"><span class="tick">§</span><h2>Education &amp; recognition</h2><span class="rule"></span></div>
+  <div class="edu-grid reveal">
+    <div>
+      <div class="edu-item">
+        <h3>M.S. Business Analytics</h3>
+        <div class="sub">California State Polytechnic University, Pomona · 2025–2027</div>
+        <p>GPA 3.51. Graduate study in analytics, statistics and data systems.</p>
+      </div>
+      <div class="edu-item">
+        <h3>B.S. Electrical &amp; Electronics Engineering</h3>
+        <div class="sub">Turkish-German University · 2021–2025</div>
+        <p>GPA 3.1. Vice President, Undergraduate Research Club. Peer tutor in signal processing and neural networks. German C1.</p>
+      </div>
+    </div>
+    <div class="recog">
+      <div class="item"><span class="yr">2025–26</span><span class="t">OpenAI ChatGPT Ambassador<span>One of the first ambassadors across the CSU system.</span></span></div>
+      <div class="item"><span class="yr">2023</span><span class="t">Generative AI with Large Language Models<span>Coursera</span></span></div>
+      <div class="item"><span class="yr">2023</span><span class="t">LangChain for LLM Application Development<span>DeepLearning.AI</span></span></div>
+      <div class="item"><span class="yr">ongoing</span><span class="t">Udemy Instructor<span>1,500+ enrollments; main course localized to Korean.</span></span></div>
+      <div class="item"><span class="yr">ongoing</span><span class="t">YouTube Creator<span>AI apps, LLM agents and quant — @murataavcu.</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="contact wrap">
+  <div class="contact-card reveal">
+    <h2>Let's build something measurable.</h2>
+    <p>Open to Data Scientist, ML Engineer and Analytics roles for 2027 — Los Angeles or remote.</p>
+    <div class="links">
+      <a class="link" href="mailto:murataliavcu1@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+        Email
+      </a>
+      <a class="link" href="https://github.com/muratali016" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.3 1.19-3.1-.12-.3-.52-1.48.11-3.08 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.11 3.08.74.8 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.28 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+        GitHub
+      </a>
+      <a class="link" href="https://www.youtube.com/@murataavcu" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 5 12 5 12 5s-7 0-8.9.4A3 3 0 0 0 1 7.5 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1C5 19 12 19 12 19s7 0 8.9-.4a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.4 12 31 31 0 0 0 23 7.5ZM9.8 15.3V8.7l5.7 3.3Z"/></svg>
+        YouTube
+      </a>
+      <a class="link" href="https://www.udemy.com/user/murat-ali-avcu/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M5 10v5c0 1.5 3.1 3 7 3s7-1.5 7-3v-5"/></svg>
+        Udemy
+      </a>
+      <!-- TODO: replace href="#" with your real LinkedIn URL -->
+      <a class="link" href="#" title="Add your LinkedIn URL" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+        LinkedIn
+      </a>
+      <!-- TODO: replace href="#" with your real Medium URL -->
+      <a class="link" href="#" title="Add your Medium URL" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12Zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42S20.96 8.46 20.96 12ZM24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12Z"/></svg>
+        Medium
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="foot-inner">
+    <span>© 2026 Murat A. Avcu — Los Angeles, CA</span>
+    <span>Built as a research tearsheet · hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ----- scroll reveal ----- */
+  var revs = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    revs.forEach(function(el){el.classList.add('in');});
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:.14, rootMargin:'0px 0px -40px 0px'});
+    revs.forEach(function(el){io.observe(el);});
+  }
+
+  /* ----- equity curve draw ----- */
+  var curve = document.getElementById('eqcurve');
+  if(curve){
+    var len = curve.getTotalLength();
+    if(reduce){
+      curve.style.strokeDasharray = 'none';
+      document.querySelector('.eq .area').style.opacity = 1;
+    } else {
+      curve.style.strokeDasharray = len;
+      curve.style.strokeDashoffset = len;
+      curve.getBoundingClientRect(); // reflow
+      curve.style.transition = 'stroke-dashoffset 1.7s cubic-bezier(.22,.61,.36,1)';
+      requestAnimationFrame(function(){
+        setTimeout(function(){ curve.style.strokeDashoffset = 0; }, 250);
+      });
+    }
+  }
+
+  /* ----- count up ----- */
+  function decimals(s){ var i = s.indexOf('.'); return i<0 ? 0 : (s.length - i - 1); }
+  function runCount(el){
+    var raw = el.getAttribute('data-count');
+    var target = parseFloat(raw);
+    var dp = decimals(raw);
+    var suffix = el.getAttribute('data-suffix') || '';
+    if(reduce){ el.textContent = target.toFixed(dp) + suffix; return; }
+    var dur = 1300, start = null;
+    function frame(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start)/dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target * eased).toFixed(dp) + suffix;
+      if(p < 1) requestAnimationFrame(frame);
+      else el.textContent = target.toFixed(dp) + suffix;
+    }
+    requestAnimationFrame(frame);
+  }
+  var counters = document.querySelectorAll('[data-count]');
+  if(reduce || !('IntersectionObserver' in window)){
+    counters.forEach(runCount);
+  } else {
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ runCount(e.target); cio.unobserve(e.target); }
+      });
+    }, {threshold:.6});
+    counters.forEach(function(el){cio.observe(el);});
+  }
+})();
+</script>
+</body>
+</html>
