@@ -242,6 +242,29 @@
   .card-foot .repo{color:var(--ink);display:inline-flex;align-items:center;gap:6px;transition:color .2s,gap .2s;}
   .card:hover .repo{color:var(--accent);gap:9px;}
   .star{color:var(--ink-2);}
+  .card.featured{
+    grid-column:1/-1;
+    padding:clamp(24px,4vw,36px);
+    background:linear-gradient(145deg,var(--card-2),var(--card));
+    gap:18px;
+  }
+  .featured-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;align-items:flex-start;}
+  .featured-head h3{font-size:clamp(1.45rem,3vw,2rem);margin-top:4px;}
+  .featured-date{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-3);letter-spacing:.05em;white-space:nowrap;padding-top:5px;}
+  .featured .lead{font-size:1rem;max-width:88ch;flex:none;}
+  .featured-metrics{display:flex;flex-wrap:wrap;gap:9px;}
+  .featured-metric{
+    font-family:"IBM Plex Mono",monospace;font-size:.76rem;
+    padding:8px 11px;border:1px solid var(--line);border-radius:9px;background:var(--paper);
+  }
+  .featured-metric b{color:var(--up);font-weight:600;}
+  .featured-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .featured-block{border-top:1px solid var(--line);padding-top:16px;}
+  .featured-block h4{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;}
+  .featured-block ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;}
+  .featured-block li{position:relative;padding-left:18px;color:var(--ink-2);font-size:.9rem;}
+  .featured-block li::before{content:"›";position:absolute;left:1px;color:var(--accent);font-family:"IBM Plex Mono",monospace;}
+  .research-note{font-family:"IBM Plex Mono",monospace;font-size:.7rem;line-height:1.55;color:var(--ink-3);margin:0;}
   .more-link{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--ink);border-bottom:1px solid var(--line-2);padding-bottom:3px;transition:color .2s,border-color .2s;}
   .more-link:hover{color:var(--accent);border-color:var(--accent);}
 
@@ -300,6 +323,7 @@
     .metrics{grid-template-columns:1fr 1fr;}
     .metric:nth-child(2){border-right:none;}
     .metric:nth-child(1),.metric:nth-child(2){border-bottom:1px solid var(--line);}
+    .featured-grid{grid-template-columns:1fr;gap:18px;}
   }
   @media(max-width:620px){
     .wrap,.topbar-inner{padding-left:20px;padding-right:20px;}
@@ -501,6 +525,45 @@
 <section id="work" class="wrap">
   <div class="sec-head reveal"><span class="tick">§</span><h2>Selected work</h2><span class="rule"></span></div>
   <div class="proj-grid">
+
+    <article class="card featured reveal">
+      <div class="featured-head">
+        <div>
+          <span class="tag">Featured · Quant Research &amp; Execution</span>
+          <h3>Automated Options Research &amp; Execution Platform</h3>
+        </div>
+        <span class="featured-date">MAY 2024 – PRESENT</span>
+      </div>
+      <p class="lead">A modular paper-trading platform spanning real-time and historical market data, signal generation, OCC contract selection, order execution, position reconciliation, exit management and pre-close flattening.</p>
+      <div class="featured-metrics">
+        <span class="featured-metric"><b>+$13,141</b> documented research run</span>
+        <span class="featured-metric"><b>2.32</b> profit factor</span>
+        <span class="featured-metric"><b>55%</b> win rate</span>
+        <span class="featured-metric">0–10 DTE research</span>
+      </div>
+      <div class="featured-grid">
+        <div class="featured-block">
+          <h4>Platform &amp; strategies</h4>
+          <ul>
+            <li>Supervised momentum, scalping and reference bots with crash restart, duplicate-signal prevention, startup reconciliation, DST-safe scheduling and environment-based secrets.</li>
+            <li>5-minute 9/21 EMA momentum with session VWAP confirmation, 8–13-symbol watchlists, alerts and independent Alpaca price checks.</li>
+            <li>SPY/QQQ and large-cap 1DTE runners, a QQQ 0DTE fixed-dollar scalper, and a SPY 15-minute ORB engine for defined-risk credit spreads.</li>
+          </ul>
+        </div>
+        <div class="featured-block">
+          <h4>Quant methods &amp; validation</h4>
+          <ul>
+            <li>Modeled next-bar fills, stop-before-target ordering, slippage, expiry selection and missing-data skips using Alpaca 1-minute and 5-minute option bars.</li>
+            <li>Implemented Black–Scholes pricing, bisection-based implied volatility, Greeks, vertical-spread payoff geometry and risk-constrained sizing.</li>
+            <li>Produced trade ledgers, equity curves, parameter sweeps, walk-forward reports, bootstrap Monte Carlo analysis and live-versus-paper comparisons.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="stack">
+        <span class="chip">Python</span><span class="chip">Alpaca REST/WebSocket</span><span class="chip">yfinance</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Railway</span>
+      </div>
+      <p class="research-note">Research result shown before full slippage and out-of-sample validation. Paper trading only; not presented as live performance or financial advice.</p>
+    </article>
 
     <a class="card reveal" href="https://github.com/muratali016/S-P-500-Key-Level-Behavior-ML-Model" target="_blank" rel="noopener">
       <span class="tag">Quant · ML</span>
@@ -721,4 +784,3 @@
 </script>
 </body>
 </html>
-
